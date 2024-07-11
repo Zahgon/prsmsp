@@ -1,3 +1,4 @@
+from typing import List
 import json
 
 import requests
@@ -46,5 +47,28 @@ class Kavenegar(ABCSmsPanel):
         }
 
         resp = requests.get(url, params=params)
+
+        return self._response_parser(resp)
+
+    def send_sms_bulk(self, receptors: List[str], message: str):
+        """send bulk sms with kavenegar sms panel
+
+        :param receptors: recivers of your message
+        :type receptor: List[str]
+
+        :param message: the message you want to send
+        :type message: str
+
+        :rtype Response
+        :return: The requests response
+        """
+        url = f"https://api.kavenegar.com/v1/{self.auth.api_key}/sms/sendarray.json"
+
+        params = {
+            "receptor": receptors,
+            "message": message,
+        }
+
+        resp = requests.post(url, data=params)
 
         return self._response_parser(resp)
