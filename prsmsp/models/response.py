@@ -19,4 +19,4 @@ class Response:
         raise TypeError
 
     def get_real_resp(self):
-        return self.real_resp
+        pass
